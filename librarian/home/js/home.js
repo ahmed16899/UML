@@ -5,7 +5,7 @@ if (localStorage.getItem('books')) {
 console.log(books)
 let authors = []
 if (localStorage.getItem('Authers')) {
-    authors = JSON.parse(localStorage.getItem('Authers'))
+  authors = JSON.parse(localStorage.getItem('Authers'))
 }
 for (let i = 0; i < authors.length; i++) {
   let tmp = `
@@ -23,7 +23,6 @@ for (let i = 0; i < books.length; i++) {
       <div class="card-body">
         <h5 class="card-text">${books[i].name}</h5>
         <p class="card-title">${books[i].author}</p>
-
         <div class="text-center">
           <button  class="btn btn-primary getInfo" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
           <button  class="btn btn-danger my-2 delete">Delete</button>
@@ -61,29 +60,47 @@ $("#search").change(function () {
 })
 
 
-$(".delete").click(function () {
-  let bookName =  $(this).parent().prev().prev().html()
+$(document).on("click", ".delete", function () {
+  console.log('in delete')
+  let bookName = $(this).parent().prev().prev().html()
   //$('#allDataBooks').empty();
   console.log(bookName)
   libr.deleteBook(bookName)
   location.reload();
-})
+});
 
 
-$(".getInfo").click(function () {
+
+
+$(document).on("click", ".getInfo", function () {
+  let oldBookName = $(this).parent().prev().prev().text()
+  let author = $(this).parent().prev().text()
+  console.log(oldBookName)
+  $(document).on("click", "#saveUpdate", function () {
+    const book = new Book($("#author").val(), $("#book").val())
+    console.log(book)
+    libr.updateBook(book, oldBookName)
+    location.reload();
+  });
+});
+
+
+
+
+/*$(".getInfo").click(function () {
   //let bookName =  $(this).prev().text()
-  let oldBookName =  $(this).parent().prev().prev().text()
-  let author =  $(this).parent().prev().text()
- console.log(oldBookName)
- // console.log(author)
+  let oldBookName = $(this).parent().prev().prev().text()
+  let author = $(this).parent().prev().text()
+  console.log(oldBookName)
+  // console.log(author)
   $("#saveUpdate").click(function () {
     //$('#allDataBooks').empty();
-    const book = new Book( $("#author").val() , $("#book").val())
-    console.log(book)  
-    libr.updateBook(book , oldBookName)
+    const book = new Book($("#author").val(), $("#book").val())
+    console.log(book)
+    libr.updateBook(book, oldBookName)
     location.reload();
   })
-  
-})
+
+})*/
 
 

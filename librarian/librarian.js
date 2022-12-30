@@ -99,6 +99,7 @@ class Librarian {
             </div>`;
             $("#allDataBooks").append(tmp);
           }*/
+          console.log(JSON.stringify(books))
         localStorage.setItem('books' , JSON.stringify(books) )
     }
 
