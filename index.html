@@ -25,8 +25,12 @@
         //const book1 = new Book();
 
         const auth = new Author('ayman');
+        const auth2 = new Author('mohamed');
+
         const allAuth =[];
         allAuth.push(auth)
+        allAuth.push(auth2)
+
         localStorage.setItem("Authers" , JSON.stringify(allAuth))
 
         localStorage.setItem("librarian" , JSON.stringify(lib))

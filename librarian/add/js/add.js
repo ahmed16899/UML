@@ -15,7 +15,7 @@ for (let i = 0; i < authors.length; i++) {
 console.log(authors)
 $("#add").click(function () {
 
-    const book = new Book($("#book").val(), $("#author").val())
+    const book = new Book( $("#author").val() , $("#book").val())
     const libr = new Librarian(lib.username ,lib.password)
     libr.addBook(book);
     
