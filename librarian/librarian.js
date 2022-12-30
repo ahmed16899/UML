@@ -52,12 +52,48 @@ class Librarian {
                   <p class="card-text">${newBooks[i].name}</p>
                   <div class="text-center">
                     <button  class="btn btn-primary">Update</button>
-                    <button  class="btn btn-danger my-2">Delete</button>
+                    <button  class="btn btn-danger my-2 delete" onclick="deleteBook(${i})">Delete</button>
                   </div>
                 </div>
               </div>
             </div>`;
             $("#allDataBooks").append(tmp);
           }
+    }
+
+    deleteBook(bookName)
+    {
+        let books = []
+        if (localStorage.getItem('books')) {
+            books = JSON.parse(localStorage.getItem('books'))
+        }
+        console.log(books)
+        console.log(bookName)
+
+        for(let i = 0 ; i<books.length ; i++)
+        {
+            if(books[i].name.includes(bookName) )
+            {
+                books.splice(i,1)
+                console.log('asdasddsasdadas')
+            }
+           
+        }
+        for (let i = 0; i < books.length; i++) {
+            let tmp = `<div class="col-3">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">${books[i].author}</h5>
+                  <p class="card-text">${books[i].name}</p>
+                  <div class="text-center">
+                    <button  class="btn btn-primary">Update</button>
+                    <button  class="btn btn-danger my-2 delete" onclick="deleteBook(${i})">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+            $("#allDataBooks").append(tmp);
+          }
+        localStorage.setItem('books' , JSON.stringify(books) )
     }
 }

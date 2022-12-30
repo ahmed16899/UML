@@ -13,18 +13,27 @@ for (let i = 0; i < books.length; i++) {
         <p class="card-text">${books[i].name}</p>
         <div class="text-center">
           <button  class="btn btn-primary">Update</button>
-          <button  class="btn btn-danger my-2">Delete</button>
+          <button  class="btn btn-danger my-2 delete">Delete</button>
         </div>
       </div>
     </div>
   </div>`;
   $("#allDataBooks").append(tmp);
 }
-
+const lib = JSON.parse(localStorage.getItem('librarian'))
+const libr = new Librarian(lib.username, lib.password)
 $("#search").change(function () {
 
   $('#allDataBooks').empty();
-  const lib = JSON.parse(localStorage.getItem('librarian'))
-  const libr = new Librarian(lib.username, lib.password)
+
   libr.search($("#search").val())
+})
+
+
+$(".delete").click(function () {
+  let bookName =  $(this).parent().prev().html()
+  $('#allDataBooks').empty();
+
+  libr.deleteBook(bookName)
+  //console.log(x)
 })
