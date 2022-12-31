@@ -44,27 +44,94 @@ class User {
   }
 
 
-signIn()
-{
-  let users = []
-if (localStorage.getItem('users')) {
-    users = JSON.parse(localStorage.getItem('users'))
-}
+  signIn() {
+    let users = []
+    if (localStorage.getItem('users')) {
+      users = JSON.parse(localStorage.getItem('users'))
+    }
 
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].username == this.username){
-        if (users[i].password ==this.password) {
-            console.log('done')
-             $("#allError").addClass('d-none')
-            window.location = '/user/home/home.html'
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].username == this.username) {
+        if (users[i].password == this.password) {
+          console.log('done')
+          $("#allError").addClass('d-none')
+          localStorage.setItem('username', this.username)
+          localStorage.setItem('password', this.password)
+          window.location = '/user/home/home.html'
         }
         else {
-            $("#allError").removeClass('d-none')
-        }
-    }
-    else {
           $("#allError").removeClass('d-none')
+        }
+      }
+      else {
+        $("#allError").removeClass('d-none')
+      }
     }
-}
-}
+  }
+
+
+  search(txt) {
+    let books = []
+    if (localStorage.getItem('books')) {
+      books = JSON.parse(localStorage.getItem('books'))
+    }
+    const newBooks = [];
+    for (let i = 0; i < books.length; i++) {
+      if (books[i].name.includes(txt)) {
+        newBooks.push(books[i])
+      }
+    }
+    console.log(txt)
+
+    console.log(newBooks)
+    //return newBooks
+    for (let i = 0; i < newBooks.length; i++) {
+      let tmp = `<div class="col-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-text">${newBooks[i].name}</h5>
+        <p class="card-title">${newBooks[i].author}</p>
+        <p class="card-title">${newBooks[i].category}</p>
+        <div class="text-center">
+        <button  class="btn btn-primary request" >Request</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+      $("#allDataBooks").append(tmp);
+    }
+  }
+
+
+  request(username,bookName) {
+    let requests = []
+    let check =false ;
+    if (localStorage.getItem('requests')) {
+      requests = JSON.parse(localStorage.getItem('requests'))
+    }
+    const requestq = {
+        username:username,
+        bookName:bookName
+    }
+    if(requests.length == 0)
+    {
+      requests.push(requestq)
+
+    }
+    else
+    {
+      for(let i = 0 ; i<requests.length ; i++)
+      {
+          if(requests[i].username == requestq.username && requests[i].bookName==requestq.bookName)
+          {
+            check=true
+          }
+      }
+    }
+    if(!check)
+    {
+      requests.push(requestq)
+    }
+    localStorage.setItem('requests' , JSON.stringify(requests))
+  }
 }
