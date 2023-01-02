@@ -109,6 +109,10 @@ class User {
     if (localStorage.getItem('requests')) {
       requests = JSON.parse(localStorage.getItem('requests'))
     }
+    let borrowed = []
+    if (localStorage.getItem('borrowed')) {
+      borrowed = JSON.parse(localStorage.getItem('borrowed'))
+    }
     const requestq = {
         username:username,
         bookName:bookName
@@ -116,7 +120,8 @@ class User {
     if(requests.length == 0)
     {
       requests.push(requestq)
-
+      check=true
+      console.log('empty')
     }
     else
     {
@@ -131,7 +136,55 @@ class User {
     if(!check)
     {
       requests.push(requestq)
+      console.log('not empty')
     }
     localStorage.setItem('requests' , JSON.stringify(requests))
+  }
+
+
+  return(username,bookName) {
+    let waitingBooks = [] 
+    let borrowed = []
+    let check =false ;
+    if (localStorage.getItem('waitingBooks')) {
+      waitingBooks = JSON.parse(localStorage.getItem('waitingBooks'))
+    }
+    if (localStorage.getItem('borrowed')) {
+      borrowed = JSON.parse(localStorage.getItem('borrowed'))
+    }
+    console.log(waitingBooks)
+    console.log(borrowed)
+
+
+    const waitingBook = {
+        username:username,
+        bookName:bookName
+    }
+  
+    
+      for(let i = 0 ; i<waitingBooks.length ; i++)
+      {
+          if( waitingBooks[i].bookName==waitingBook.bookName)
+          {
+            check=true
+          }
+      }
+    
+    if(!check)
+    {
+      waitingBooks.push(waitingBook)
+      /*for(let i = 0 ; i<borrowed.length ; i++)
+      {
+          if( borrowed[i].bookName!=waitingBook.bookName)
+          {
+            console.log(i)
+
+            borrowed.splice(i,1)
+          }
+      }*/
+    }
+    localStorage.setItem('waitingBooks' , JSON.stringify(waitingBooks))
+    localStorage.setItem('borrowed' , JSON.stringify(borrowed))
+
   }
 }

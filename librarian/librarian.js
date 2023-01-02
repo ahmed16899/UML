@@ -152,23 +152,75 @@ class Librarian {
       requests = JSON.parse(localStorage.getItem('requests'))
       if (localStorage.getItem('borrowed')) {
         borrowed = JSON.parse(localStorage.getItem('borrowed'))
-        for (let i = 0; i < requests.length; i++) {
-          if (requests[i].username == username && requests[i].bookName == bookName) {
-            const requestq = {
-              username: username,
-              bookName: bookName
-            }
-            borrowed.push(requestq)
-
-            requests.splice(i, 1);
-            
+      }
+      for (let i = 0; i < requests.length; i++) {
+        if (requests[i].username == username && requests[i].bookName == bookName) {
+          const requestq = {
+            username: username,
+            bookName: bookName
           }
+          borrowed.push(requestq)
+
+          requests.splice(i, 1);
+
         }
       }
     }
-    localStorage.setItem("requests" , JSON.stringify(requests))
-    localStorage.setItem("borrowed" , JSON.stringify(borrowed))
+    localStorage.setItem("requests", JSON.stringify(requests))
+    localStorage.setItem("borrowed", JSON.stringify(borrowed))
 
 
+  }
+
+  acceptReturnBook(username, bookName) {
+    let waitingBooks = []
+    let borrowed = []
+    if (localStorage.getItem('waitingBooks')) {
+      waitingBooks = JSON.parse(localStorage.getItem('waitingBooks'))
+    }
+    if (localStorage.getItem('borrowed')) {
+      borrowed = JSON.parse(localStorage.getItem('borrowed'))
+    }
+    console.log(waitingBooks)
+    console.log(borrowed)
+    console.log(bookName)
+
+
+    for (let i = 0; i < borrowed.length; i++) {
+      if (borrowed[i].bookName == bookName) {
+        console.log(bookName)
+
+        borrowed.splice(i, 1)
+      }
+    }
+    for (let i = 0; i < waitingBooks.length; i++) {
+      if (waitingBooks[i].bookName == bookName) {
+        console.log(bookName)
+
+        waitingBooks.splice(i, 1)
+      }
+    }
+    localStorage.setItem("waitingBooks", JSON.stringify(waitingBooks))
+    localStorage.setItem("borrowed", JSON.stringify(borrowed))
+  }
+
+  declineReturnBook(username, bookName) {
+    let waitingBooks = []
+    let borrowed = []
+    if (localStorage.getItem('waitingBooks')) {
+      waitingBooks = JSON.parse(localStorage.getItem('waitingBooks'))
+    }
+   
+    console.log(waitingBooks)
+    console.log(bookName)
+
+    for (let i = 0; i < waitingBooks.length; i++) {
+      if (waitingBooks[i].bookName == bookName) {
+        console.log(bookName)
+
+        waitingBooks.splice(i, 1)
+      }
+    }
+    localStorage.setItem("waitingBooks", JSON.stringify(waitingBooks))
   }
 }
