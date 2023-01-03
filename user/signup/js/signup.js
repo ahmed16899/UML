@@ -14,7 +14,7 @@ $("#register").click(function () {
         $("#pError").addClass('d-none')
         checkPassword = true
     }
-    const newUser = new User($("#username").val(), $("#password").val())
+    const newUser = new Customer($("#username").val(), $("#password").val())
     if (checkPassword && checkUser) {
         newUser.signUp()
     }})

@@ -1,4 +1,4 @@
 $("#signin").click(function () {
-    const newUser = new User($("#username").val(), $("#password").val())
+    const newUser = new Customer($("#username").val(), $("#password").val())
     newUser.signIn();
 })

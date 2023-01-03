@@ -65,7 +65,7 @@ console.log(borrowed.length)
 
 //}
  
-const user = new User(localStorage.getItem('username'), localStorage.getItem('password'))
+const user = new Customer(localStorage.getItem('username'), localStorage.getItem('password'))
 $("#search").change(function () {
     $('#allDataBooks').empty();
     user.search($("#search").val())

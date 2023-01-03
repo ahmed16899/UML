@@ -1,7 +1,20 @@
-class Librarian {
+class User
+{
+    constructor(username, password) {
+        this.username = username;
+        this.password = password;
+      }
+      signUp() {}
+    
+    
+      signIn() {}
+    
+      search() {}
+    
+}
+class Librarian extends User{
   constructor(username, password) {
-    this.username = username;
-    this.password = password;
+    super(username, password);
   }
 
   signIn() {

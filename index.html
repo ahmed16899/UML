@@ -17,8 +17,6 @@
     <br>
     <a href="/librarian/signin/signin.html">Librerian Signin</a>
     <br>
-    <script src="/classes/author.js"></script>
-    <script src="/librarian/librarian.js"></script>
     <script>
         const lib = new Librarian("ahmed","123456");
         console.log(lib)
@@ -30,13 +28,19 @@
         const allAuth =[];
         allAuth.push(auth)
         allAuth.push(auth2)
+        localStorage.setItem("librarian" , JSON.stringify(lib))
 
         localStorage.setItem("Authers" , JSON.stringify(allAuth))
         //localStorage.setItem("borrowed" , JSON.stringify([]))
 
-        localStorage.setItem("librarian" , JSON.stringify(lib))
     </script>
+    <script type="module" defer src="/classes/user.js"></script>
+    <script type="module" defer src="/classes/author.js"></script>
+    <script type="module" defer src="/user/user.js"></script>
 
+    <script type="module" defer src="/librarian/librarian.js"></script>
+    
+    
 </body>
 
 </html>
