@@ -26,7 +26,7 @@ for (let i = 0; i < borrowed.length; i++) {
     $("#allDataBooks").append(tmp);
   }
 }
-const user = new User(localStorage.getItem('username'), localStorage.getItem('password'))
+const user = new Customer(localStorage.getItem('username'), localStorage.getItem('password'))
 
 
 $(document).on("click", ".return", function () {

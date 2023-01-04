@@ -1,15 +1,13 @@
-class User
-{
-    constructor(username, password) {
-        this.username = username;
-        this.password = password;
-      }
-      signUp() {}
-      signIn() {}
-      search() {}
-    
+class User {
+  constructor(username, password) {
+    this.username = username;
+    this.password = password;
+  }
+  signUp() { }
+  signIn() { }
+  search() { }
 }
-
+//import "../classes/user.js"
 class Customer extends User {
   constructor(username, password) {
     super(username, password);
@@ -114,9 +112,9 @@ class Customer extends User {
   }
 
 
-  request(username,bookName) {
+  request(username, bookName) {
     let requests = []
-    let check =false ;
+    let check = false;
     if (localStorage.getItem('requests')) {
       requests = JSON.parse(localStorage.getItem('requests'))
     }
@@ -125,38 +123,33 @@ class Customer extends User {
       borrowed = JSON.parse(localStorage.getItem('borrowed'))
     }
     const requestq = {
-        username:username,
-        bookName:bookName
+      username: username,
+      bookName: bookName
     }
-    if(requests.length == 0)
-    {
+    if (requests.length == 0) {
       requests.push(requestq)
-      check=true
+      check = true
       console.log('empty')
     }
-    else
-    {
-      for(let i = 0 ; i<requests.length ; i++)
-      {
-          if(requests[i].username == requestq.username && requests[i].bookName==requestq.bookName)
-          {
-            check=true
-          }
+    else {
+      for (let i = 0; i < requests.length; i++) {
+        if (requests[i].username == requestq.username && requests[i].bookName == requestq.bookName) {
+          check = true
+        }
       }
     }
-    if(!check)
-    {
+    if (!check) {
       requests.push(requestq)
       console.log('not empty')
     }
-    localStorage.setItem('requests' , JSON.stringify(requests))
+    localStorage.setItem('requests', JSON.stringify(requests))
   }
 
 
-  return(username,bookName) {
-    let waitingBooks = [] 
+  return(username, bookName) {
+    let waitingBooks = []
     let borrowed = []
-    let check =false ;
+    let check = false;
     if (localStorage.getItem('waitingBooks')) {
       waitingBooks = JSON.parse(localStorage.getItem('waitingBooks'))
     }
@@ -168,21 +161,18 @@ class Customer extends User {
 
 
     const waitingBook = {
-        username:username,
-        bookName:bookName
+      username: username,
+      bookName: bookName
     }
-  
-    
-      for(let i = 0 ; i<waitingBooks.length ; i++)
-      {
-          if( waitingBooks[i].bookName==waitingBook.bookName)
-          {
-            check=true
-          }
+
+
+    for (let i = 0; i < waitingBooks.length; i++) {
+      if (waitingBooks[i].bookName == waitingBook.bookName) {
+        check = true
       }
-    
-    if(!check)
-    {
+    }
+
+    if (!check) {
       waitingBooks.push(waitingBook)
       /*for(let i = 0 ; i<borrowed.length ; i++)
       {
@@ -194,8 +184,8 @@ class Customer extends User {
           }
       }*/
     }
-    localStorage.setItem('waitingBooks' , JSON.stringify(waitingBooks))
-    localStorage.setItem('borrowed' , JSON.stringify(borrowed))
+    localStorage.setItem('waitingBooks', JSON.stringify(waitingBooks))
+    localStorage.setItem('borrowed', JSON.stringify(borrowed))
 
   }
 }

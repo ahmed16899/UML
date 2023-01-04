@@ -5,8 +5,7 @@ class Book
         this.name = name;
         this.category = category;
         this.id=null;
-        this.borrow=null;
-        this.status=null;
+        this.borrow=false;
       }
 
       

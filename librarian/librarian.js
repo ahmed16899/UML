@@ -1,22 +1,16 @@
-class User
-{
-    constructor(username, password) {
-        this.username = username;
-        this.password = password;
-      }
-      signUp() {}
-    
-    
-      signIn() {}
-    
-      search() {}
-    
+class User {
+  constructor(username, password) {
+    this.username = username;
+    this.password = password;
+  }
+  signUp() { }
+  signIn() { }
+  search() { }
 }
-class Librarian extends User{
+class Librarian extends User {
   constructor(username, password) {
     super(username, password);
   }
-
   signIn() {
     const librarian = JSON.parse(localStorage.getItem('librarian'))
     if (librarian.username == this.username) {
@@ -161,6 +155,14 @@ class Librarian extends User{
   acceptRequest(username, bookName) {
     let requests = []
     let borrowed = []
+    let allTransactions = []
+    let books = []
+    if (localStorage.getItem('allTransactions')) {
+      allTransactions = JSON.parse(localStorage.getItem('allTransactions'))
+    }
+    if (localStorage.getItem('books')) {
+      books = JSON.parse(localStorage.getItem('books'))
+    }
     if (localStorage.getItem('requests')) {
       requests = JSON.parse(localStorage.getItem('requests'))
       if (localStorage.getItem('borrowed')) {
@@ -172,15 +174,26 @@ class Librarian extends User{
             username: username,
             bookName: bookName
           }
-          borrowed.push(requestq)
-
+          borrowed.push(requestq);
+          allTransactions.push(requestq);
           requests.splice(i, 1);
 
+        }
+      }
+
+      for (let i = 0; i < books.length; i++) {
+        if (books[i].name == bookName) {
+          console.log(books[i])
+          books[i].borrow = true;
         }
       }
     }
     localStorage.setItem("requests", JSON.stringify(requests))
     localStorage.setItem("borrowed", JSON.stringify(borrowed))
+    localStorage.setItem("books", JSON.stringify(books))
+    localStorage.setItem("allTransactions", JSON.stringify(allTransactions))
+
+
 
 
   }
@@ -188,11 +201,16 @@ class Librarian extends User{
   acceptReturnBook(username, bookName) {
     let waitingBooks = []
     let borrowed = []
+    let books = []
+
     if (localStorage.getItem('waitingBooks')) {
       waitingBooks = JSON.parse(localStorage.getItem('waitingBooks'))
     }
     if (localStorage.getItem('borrowed')) {
       borrowed = JSON.parse(localStorage.getItem('borrowed'))
+    }
+    if (localStorage.getItem('books')) {
+      books = JSON.parse(localStorage.getItem('books'))
     }
     console.log(waitingBooks)
     console.log(borrowed)
@@ -213,8 +231,15 @@ class Librarian extends User{
         waitingBooks.splice(i, 1)
       }
     }
+    for (let i = 0; i < books.length; i++) {
+      if (books[i].name == bookName) {
+        console.log(books[i])
+        books[i].borrow = false;
+      }
+    }
     localStorage.setItem("waitingBooks", JSON.stringify(waitingBooks))
     localStorage.setItem("borrowed", JSON.stringify(borrowed))
+    localStorage.setItem("books", JSON.stringify(books))
   }
 
   declineReturnBook(username, bookName) {
@@ -223,7 +248,7 @@ class Librarian extends User{
     if (localStorage.getItem('waitingBooks')) {
       waitingBooks = JSON.parse(localStorage.getItem('waitingBooks'))
     }
-   
+
     console.log(waitingBooks)
     console.log(bookName)
 
@@ -236,4 +261,90 @@ class Librarian extends User{
     }
     localStorage.setItem("waitingBooks", JSON.stringify(waitingBooks))
   }
+  getAllBorrowdBooks() {
+    let borrowed = []
+    if (localStorage.getItem('borrowed')) {
+      borrowed = JSON.parse(localStorage.getItem('borrowed'))
+    }
+    return borrowed
+  }
+  getAllBooks() {
+    let books = []
+    if (localStorage.getItem('books')) {
+      books = JSON.parse(localStorage.getItem('books'))
+    }
+    return books
+  }
+  getAllUsers() {
+    let users = []
+    if (localStorage.getItem('users')) {
+      users = JSON.parse(localStorage.getItem('users'))
+    }
+    return users
+  }
+
+  getAuthorBooks() {
+    let author = []
+    if (localStorage.getItem('Authers')) {
+      author = JSON.parse(localStorage.getItem('Authers'))
+    }
+    let books = []
+    if (localStorage.getItem('books')) {
+      books = JSON.parse(localStorage.getItem('books'))
+    }
+    const allAB = []
+    for (let i = 0; i < author.length; i++) {
+      const bookss = [];
+      const objAB = {
+        author: author[i].name,
+        books: bookss
+      }
+      for (let j = 0; j < books.length; j++) {
+        if (books[j].author == author[i].name) {
+          bookss.push(books[j].name);
+        }
+      }
+      allAB.push(objAB);
+    }
+    console.log(allAB)
+    return allAB;
+  }
+
+
+  getCategoryBooks() {
+    let books = []
+    const allCat = []
+
+    if (localStorage.getItem('books')) {
+      books = JSON.parse(localStorage.getItem('books'))
+    }
+    let allCB = []
+    for (let i = 0; i < books.length; i++) {
+      const bookss = [];
+       allCat.push(books[i].category)
+
+      const objAB = {
+        category: books[i].category,
+        books: bookss
+      }
+      for (let j = 0; j < books.length; j++) {
+        if (books[j].category == books[i].category) {
+          if(allCat.includes(books[i].category))
+          {
+            bookss.push(books[j].name);
+          }
+        }
+      }
+      allCB.push(objAB);
+    }
+    allCB = allCB.filter((value, index, self) =>
+  index === self.findIndex((t) => (
+    t.category === value.category 
+  ))
+)
+    return allCB
+  }
+
+
+
 }
